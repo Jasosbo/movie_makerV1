@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,33 @@ namespace movie_makerV1
     {
         static void Main(string[] args)
         {
+
+            List<string> avaliableSnacks = new List<string>() { "popcorn", "chips", "chocolate" };
+            List<float> snackPrices = new List<float>() { 2.50f, 1.50f, 2 };
+
+            List<string> avaliabledrinks = new List<string>() { "Fanta", "l&P" };
+            List<float> drinkPrices = new List<float>() { 2.50f, 1.50f };
+
+            TicketHolder testTH = new TicketHolder("charlie",16,3);
+
+
+            List<int> S = new List<int>() { 0, 2 };
+            List<int> Sq = new List<int>() { 2, 1 };
+
+            testTH.AddSnacks(S , Sq);
+
+            List<int> D = new List<int>() { 1 };
+            List<int> Dq = new List<int>() { 2 };
+
+            testTH.AddDrinks( D , Dq );
+
+
+            testTH.SetAge(18);
+
+            Console.WriteLine($"{testTH.CalculateToatalCost(snackPrices,drinkPrices)}");
+            
+            Console.ReadLine();
+
         }
     }
 }

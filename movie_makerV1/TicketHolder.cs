@@ -15,18 +15,22 @@ namespace movie_makerV1
         private int age;
         private int numberTickets;
         private bool credit;
-        private List<string> snackOrder = new List<string>();
+        //stores the indexs of the snacks that has been ordered
+        private List<int> snackOrder = new List<int>();
         private List<int> snackQuantity = new List<int>();
-        private List<string> drinkOrder = new List<string>();
+        //stroes the indexs of the drinks that has been ordered
+        private List<int> drinkOrder = new List<int>();
         private List<int> drinkQuantity = new List<int>();
 
         //constructor - constructs an object of this class
 
-        public TicketHolder()
+        public TicketHolder(string name, int age, int nTickets)
         {
 
 
-
+            this.name = name;
+            this.age = age;
+            numberTickets = nTickets;
 
         }
 
@@ -35,24 +39,109 @@ namespace movie_makerV1
         public int GetAge()
         {
 
-            return 0;
-        
+            return this.age;
+
         }
 
         //sets the value of the private age value
         public void SetAge(int newAge)
-        { 
-        
-        
+        {
+            this.age = newAge;
+
         }
 
-        //returns the total cost for the ticket holders purchased items
-        public float CalculateToatalCost()
+        //set the value 
+        public void SetCredit(bool newPaymentType)
         {
 
-            return 0.0f;
+            credit = newPaymentType;
+
 
         }
+
+
+        //add snacks and quantitys to the snackorder list and snackquantity list
+        public void AddSnacks(List<int> snacks, List<int> quantities)
+        {
+
+            snackOrder = snacks;
+            snackQuantity = quantities;
+        
+        }
+
+        //add drinks and quantitys to the drinkorder list and drinkquantity list
+        public void AddDrinks(List<int> drinks, List<int> quantities)
+        {
+
+            drinkOrder = drinks;
+            drinkQuantity = quantities;
+
+        }
+
+
+        //returns string stating if the ticket holder is paying cash or credit
+
+        private string PaymentType()
+        {
+
+            string paymentType = "credit";
+            if (credit == false) 
+            {
+                paymentType = "cash";
+            }
+
+            return paymentType;
+        }
+
+
+        //returns the total cost for the ticket holders purchased items
+        public float CalculateToatalCost(List<float> sPrice,List<float> dPrice)
+        {
+            float totalCost = 0f;
+
+
+            //loop through snack order and calculate the cost for each snack
+
+            for (int snackIndex = 0; snackIndex < snackOrder.Count; snackIndex++)
+            {
+
+                float snackPrice = sPrice[snackOrder[snackIndex]];
+
+                //add the cost of each snack to totalCost
+                totalCost += snackPrice * snackQuantity[snackIndex];
+
+
+            }
+            
+            //loop through drink order and calculate the cost for each drink
+            for (int drinkIndex = 0; drinkIndex < drinkOrder.Count; drinkIndex++)
+            {
+                float drinkPrice = dPrice[drinkOrder[drinkIndex]];
+
+                //add the cost of each drink to totalCost
+                totalCost += drinkPrice * drinkQuantity[drinkIndex];
+
+
+            }
+
+
+
+            return totalCost;
+
+        }
+
+
+        //calcualte the ticket cost
+
+        public float CalculateTicketCost(float ticketPrice)
+        {
+
+            return numberTickets * ticketPrice;
+
+
+        }
+
+
 
         // returns a string displaying the recipet of the ticket holders puruchased items
         public string GenerateRecipet()
