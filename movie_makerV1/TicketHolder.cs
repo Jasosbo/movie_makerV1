@@ -95,7 +95,7 @@ namespace movie_makerV1
 
 
         //returns the total cost for the ticket holders purchased items
-        public float CalculateToatalCost(List<float> sPrice,List<float> dPrice)
+        public float CalculateToatalCost(List<float> sPrice,List<float> dPrice,float ticketPrice)
         {
             float totalCost = 0f;
 
@@ -124,7 +124,7 @@ namespace movie_makerV1
 
             }
 
-
+            totalCost += CalculateTicketCost(ticketPrice);
 
             return totalCost;
 
@@ -138,6 +138,85 @@ namespace movie_makerV1
 
             return numberTickets * ticketPrice;
 
+
+        }
+
+        //return a summary of the drinks and snack order
+        private string SnackOrderSummary(List<string> sList,List<float>sPrice,List<string>dList,List<float>dPrice)
+        {
+            string summary = "Snacks and Drinks\n";
+
+            //loop through snack orders and add quantity,snack and total item cost to the summary
+
+            for (int snackIndex = 0; snackIndex < snackOrder.Count; snackIndex++)
+            {
+                 
+                 summary += snackQuantity[snackIndex] + " X " + sList[snackOrder[snackIndex]] + "\t$" + (snackQuantity[snackIndex] * sPrice[snackOrder[snackIndex]]) +"\n";
+                    
+            }
+
+            for (int drinkIndex = 0; drinkIndex < drinkOrder.Count; drinkIndex++)
+            {
+                summary += drinkQuantity[drinkIndex] + " x " + dList[drinkOrder[drinkIndex]] + "\t$" + (drinkQuantity[drinkIndex] * dPrice[drinkOrder[drinkIndex]]) + "\n";
+            }
+
+            return summary;
+
+        }
+        //check if a surcharge is required
+        private bool GetSurcharge()
+        {
+            return credit;
+        }
+
+        //return string displaying surcharge cost
+        private string SurchargeSummary(List<float> sPrice, List<float> dPrice, float ticketPrice)
+        {
+            string summary = "";
+
+            if (credit)
+            {
+
+                summary += "Surcharge\t$" + CalculateSurcharge(sPrice, dPrice, ticketPrice);   
+
+            }
+
+
+            return summary;
+
+        }
+
+        //return the surcharge amount
+        private float CalculateSurcharge(List<float> sPrice, List<float> dPrice, float ticketPrice)
+        {
+            float surcharge = CalculateToatalCost(sPrice,dPrice,ticketPrice) * 0.2f;
+
+            return surcharge;
+
+        }
+
+        //calculate the total payment amount
+        private float CalculateTotalPayment(List<float> sPrice, List<float> dPrice, float ticketPrice)
+        {
+
+            float totalPayment = CalculateToatalCost(sPrice, dPrice, ticketPrice);
+
+            if (credit)
+            {
+                totalPayment += CalculateSurcharge(sPrice, dPrice, ticketPrice);
+            }
+
+            return totalPayment;
+
+        }
+
+
+
+        //return a summary of the total amount to be paid
+        private string TotalPaymentSummary(List<float> sPrice, List<float> dPrice, float ticketPrice)
+        {
+
+            return "Total\t$" + CalculateTotalPayment(sPrice, dPrice, ticketPrice); 
 
         }
 
