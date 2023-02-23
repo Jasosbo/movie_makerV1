@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -84,10 +85,10 @@ namespace movie_makerV1
         private string PaymentType()
         {
 
-            string paymentType = "credit";
+            string paymentType = "Card";
             if (credit == false) 
             {
-                paymentType = "cash";
+                paymentType = "Cash";
             }
 
             return paymentType;
@@ -141,6 +142,12 @@ namespace movie_makerV1
 
         }
 
+        private string TicketSummary(float ticketPrice)
+        {
+            return "-------------------------\n" + $"{numberTickets} x Tickets\t${CalculateTicketCost(ticketPrice)}\n-------------------------\n";
+
+        }
+
         //return a summary of the drinks and snack order
         private string SnackOrderSummary(List<string> sList,List<float>sPrice,List<string>dList,List<float>dPrice)
         {
@@ -151,13 +158,13 @@ namespace movie_makerV1
             for (int snackIndex = 0; snackIndex < snackOrder.Count; snackIndex++)
             {
                  
-                 summary += snackQuantity[snackIndex] + " X " + sList[snackOrder[snackIndex]] + "\t$" + (snackQuantity[snackIndex] * sPrice[snackOrder[snackIndex]]) +"\n";
+                 summary += snackQuantity[snackIndex] + "  X  " + sList[snackOrder[snackIndex]] + "\t$" + (snackQuantity[snackIndex] * sPrice[snackOrder[snackIndex]]) +"\n";
                     
             }
 
             for (int drinkIndex = 0; drinkIndex < drinkOrder.Count; drinkIndex++)
             {
-                summary += drinkQuantity[drinkIndex] + " x " + dList[drinkOrder[drinkIndex]] + "\t$" + (drinkQuantity[drinkIndex] * dPrice[drinkOrder[drinkIndex]]) + "\n";
+                summary += drinkQuantity[drinkIndex] + "  x  " + dList[drinkOrder[drinkIndex]] + "\t$" + (drinkQuantity[drinkIndex] * dPrice[drinkOrder[drinkIndex]]) + "\n";
             }
 
             return summary;
@@ -189,7 +196,7 @@ namespace movie_makerV1
         //return the surcharge amount
         private float CalculateSurcharge(List<float> sPrice, List<float> dPrice, float ticketPrice)
         {
-            float surcharge = CalculateToatalCost(sPrice,dPrice,ticketPrice) * 0.2f;
+            float surcharge = CalculateToatalCost(sPrice,dPrice,ticketPrice) * 0.05f;
 
             return surcharge;
 
@@ -223,11 +230,14 @@ namespace movie_makerV1
 
 
         // returns a string displaying the recipet of the ticket holders puruchased items
-        public string GenerateRecipet()
+        public string GenerateRecipet(float tPrice,List<string> sList, List<float> sPrice, List<string> dList, List<float> dPrice)
         {
 
-            return "";
-
+            string reciept = $"Name: {name}\nAge: {age}\nPayment Type: {PaymentType()}\n" +
+                $"{TicketSummary(tPrice)}\n{SnackOrderSummary(sList,sPrice,dList,dPrice)}\n" +
+                $"{SurchargeSummary( sPrice,dPrice, tPrice)}\n {TotalPaymentSummary(sPrice, dPrice, tPrice)}";
+                
+            return reciept;
         }
 
         //returns a string collating all the values stored in the private variables
