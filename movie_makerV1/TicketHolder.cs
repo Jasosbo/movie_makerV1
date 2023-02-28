@@ -51,6 +51,11 @@ namespace movie_makerV1
 
         }
 
+        public int GetTickets() 
+        {
+            return numberTickets;
+        }
+
         //set the value 
         public void SetCredit(bool newPaymentType)
         {
@@ -235,7 +240,7 @@ namespace movie_makerV1
 
             string reciept = $"Name: {name}\nAge: {age}\nPayment Type: {PaymentType()}\n" +
                 $"{TicketSummary(tPrice)}\n{SnackOrderSummary(sList,sPrice,dList,dPrice)}\n" +
-                $"{SurchargeSummary( sPrice,dPrice, tPrice)}\n {TotalPaymentSummary(sPrice, dPrice, tPrice)}";
+                $"{SurchargeSummary( sPrice,dPrice, tPrice)}\n{TotalPaymentSummary(sPrice, dPrice, tPrice)}";
                 
             return reciept;
         }

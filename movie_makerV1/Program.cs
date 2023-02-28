@@ -22,7 +22,7 @@ namespace movie_makerV1
 
             float ticketPrice = 5f;
 
-            TicketHolder testTH = new TicketHolder("charlie", 16, 3);
+            TicketHolder testTH = new TicketHolder("Charlie", 16, 3);
 
 
             List<int> S = new List<int>() { 0, 2 };
@@ -34,9 +34,9 @@ namespace movie_makerV1
             List<int> Dq = new List<int>() { 2 };
 
             testTH.AddDrinks(D, Dq);
-            testTH.SetAge(18);
 
-
+            testTH.SetCredit(true);
+                
             Console.WriteLine($"{testTH.GenerateRecipet(ticketPrice, avaliableSnacks, snackPrices, avaliabledrinks, drinkPrices)}");
 
             Console.ReadLine();
