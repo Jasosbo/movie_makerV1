@@ -64,7 +64,31 @@ namespace movie_makerV1
 
 
         }
+        //get thge snack order
+        public List<int> GetSnackOrder()
+        {
 
+            return snackOrder;
+
+        }
+
+        public List<int> GetSnackQuantity()
+        {
+
+            return snackQuantity;
+        }
+        public List<int> GetDrinkOrder()
+        {
+
+            return drinkOrder;
+
+        }
+
+        public List<int> GetDrinkQuantity()
+        {
+
+            return drinkQuantity;
+        }
 
         //add snacks and quantitys to the snackorder list and snackquantity list
         public void AddSnacks(List<int> snacks, List<int> quantities)
